@@ -1,6 +1,6 @@
-# Small Projects Collection
+# Personal Projects Collection
 
-This repository contains a collection of small projects, test tasks, utilities, and experimental code.
+This repository contains a collection of personal projects, test tasks, utilities, and experimental code.
 
 ## Projects
 
@@ -52,10 +52,22 @@ Proxy test task.
 ### 16. military_shop
 Military shop project.
 
+### 17. mapping_process
+Mapping process utility.
+
+### 18. trigger_endpoint
+Trigger endpoint service.
+
+### 19. aws_batch-scrapper
+AWS batch scraping utility.
+
+### 20. new
+New project/experiment.
+
 ## Structure
 
 ```
-small-projects/
+personal-projects/
 ├── FetchWeather/
 ├── DatasetHandler/
 ├── CVProject/
@@ -72,12 +84,16 @@ small-projects/
 ├── djangoPerfumes/
 ├── proxy-test-task/
 ├── military_shop/
+├── mapping_process/
+├── trigger_endpoint/
+├── aws_batch-scrapper/
+├── new/
 └── README.md
 ```
 
 ## Migration Notes
 
-This repository was created by consolidating multiple small projects and test tasks:
+This repository was created by consolidating multiple personal projects and test tasks:
 - FetchWeather
 - DatasetHandler
 - CVProject
@@ -94,6 +110,10 @@ This repository was created by consolidating multiple small projects and test ta
 - djangoPerfumes
 - proxy-test-task
 - military_shop
+- mapping_process
+- trigger_endpoint
+- aws_batch-scrapper
+- new
 
 Original repositories have been archived and made private after migration.
 
