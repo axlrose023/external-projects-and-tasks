@@ -1,0 +1,40 @@
+{% extends "cv_app/base.html" %}
+{% block title %}Recent requests{% endblock %}
+{% block content %}
+  <h1>Recent requests <span class="muted">({{ total }})</span></h1>
+
+  {% if logs %}
+    <ul class="grid" style="margin-top:16px">
+      {% for r in logs %}
+        <li class="card" style="list-style:none">
+          <div><strong>{{ r.timestamp|date:"Y-m-d H:i:s" }}</strong></div>
+          <div class="muted">{{ r.method }} {{ r.path }} — {{ r.status_code }}</div>
+        </li>
+      {% endfor %}
+    </ul>
+
+    {% if is_paginated %}
+      <nav class="pager" role="navigation" aria-label="Pagination" style="margin-top:24px">
+        {% if page_obj.has_previous %}
+          <a href="?page=1">« First</a>
+          <a href="?page={{ page_obj.previous_page_number }}">‹ Prev</a>
+        {% else %}
+          <span>« First</span>
+          <span>‹ Prev</span>
+        {% endif %}
+
+        <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">Next ›</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">Last »</a>
+        {% else %}
+          <span>Next ›</span>
+          <span>Last »</span>
+        {% endif %}
+      </nav>
+    {% endif %}
+  {% else %}
+    <p class="muted">No entries yet.</p>
+  {% endif %}
+{% endblock %}

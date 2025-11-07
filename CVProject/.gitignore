@@ -1,0 +1,78 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+.env
+.env.*
+
+# If using Django's local settings pattern
+local_settings.py
+
+# Backup files
+*.bak
+*.swp
+*.swo
+
+# Testing
+.coverage
+htmlcov/
+.tox/
+.nox/
+.pytest_cache/
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+*.iml
+
+# Node
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Virtualenv
+venv/
+env/
+.cvproject-py3.13/
+
+# Docker
+*.pid
+*.seed
+*.pidfile
+docker-compose.override.yml
+
+# PDF output
+*.pdf
+
+# MyPy, Ruff, etc.
+.mypy_cache/
+ruff_cache/
+.dmypy.json
+.pyre/
+.pytype/
+
+# System files
+.DS_Store
+Thumbs.db
+.env

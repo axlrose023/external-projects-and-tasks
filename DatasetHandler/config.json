@@ -1,0 +1,8 @@
+{
+  "postgres": {
+    "dsn": "postgresql+asyncpg://user:password@postgres:5432/db"
+  },
+  "api_key": {
+    "secret_key": "83daa0256a2289b0fb23693bf1f6034d44396675749244721a2b20e896e11662"
+  }
+}

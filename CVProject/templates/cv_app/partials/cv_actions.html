@@ -1,0 +1,26 @@
+<div class="actions">
+  <a href="{% url 'cv_pdf' cv.pk %}" class="button">
+    Download PDF
+  </a>
+
+  <form method="post" action="{% url 'cv_translate' cv.pk %}" class="actions-form">
+    {% csrf_token %}
+    <select name="language" required>
+      <option value="" disabled selected>Choose language…</option>
+      {% for lang in languages %}
+        <option value="{{ lang }}">{{ lang }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="button">
+      Translate
+    </button>
+  </form>
+
+  <form method="post" action="{% url 'cv_send_email' cv.pk %}" class="actions-form">
+    {% csrf_token %}
+    <input type="email" name="email" placeholder="you@example.com" required />
+    <button type="submit" class="button">
+      Send by Email
+    </button>
+  </form>
+</div>

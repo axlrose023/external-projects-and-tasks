@@ -1,0 +1,56 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>
+  @page { size: A4; margin: 22mm; }
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:#111; }
+  h1 { margin: 0 0 8mm 0; font-size: 28px; }
+  h2 { margin: 8mm 0 3mm; font-size: 18px; }
+  p  { margin: 0 0 4mm 0; }
+  ul { margin: 0; padding-left: 5mm; }
+  .skills span { display:inline-block; border:1px solid #000; border-radius:999px; padding:2px 8px; margin:0 4px 4px 0; font-size:12px; }
+  .muted { color:#555; }
+  .contact { display:flex; gap:6mm; margin-bottom:2mm; }
+  .key { width:30mm; color:#555; }
+</style>
+
+<h1>{{ cv.firstname }} {{ cv.lastname }}</h1>
+
+{% if cv.bio %}
+  <p class="muted">{{ cv.bio }}</p>
+{% endif %}
+
+{% if cv.skills %}
+  <h2>Skills</h2>
+  <p class="skills">
+    {% for s in cv.skills %}<span>{{ s }}</span>{% endfor %}
+  </p>
+{% endif %}
+
+{% if cv.projects %}
+  <h2>Projects</h2>
+  <ul>
+    {% for p in cv.projects %}
+      <li>
+        <strong>{{ p.name|default:"Project" }}</strong>
+        {% if p.year %}<span class="muted"> — {{ p.year }}</span>{% endif %}
+        {% if p.description %}<div class="muted">{{ p.description }}</div>{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+{% if cv.contacts %}
+  <h2>Contacts</h2>
+  {% for k, v in cv.contacts.items %}
+    <div class="contact">
+      <div class="key">{{ k|capfirst }}</div>
+      <div>
+        {% if v|slice:":4" == "http" %}
+          <a href="{{ v }}">{{ v }}</a>
+        {% else %}
+          {{ v }}
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+{% endif %}

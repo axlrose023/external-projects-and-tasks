@@ -1,0 +1,30 @@
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+env/
+venv/
+.venv/
+*.env
+
+# Django stuff
+db.sqlite3
+*.log
+media/
+
+# System files
+.DS_Store
+*.swp
+
+# Python package files
+*.egg-info/
+*.egg
+dist/
+build/
+
+# IDEs and editors
+.vscode/
+.idea/
+templates

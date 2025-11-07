@@ -1,0 +1,126 @@
+version: '3.8'
+
+x-backend-image: &backend-image
+  build:
+    context: .
+    dockerfile: Dockerfile
+  image: backend
+
+services:
+  db:
+    container_name: database
+    image: postgres:16.0-alpine
+    restart: on-failure
+    profiles: [ "default" ]
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $$DATABASE_USER || exit 1" ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+    networks:
+      - backend_network
+
+  redis:
+    container_name: redis
+    image: redis:6.2-alpine
+    restart: on-failure
+    profiles: [ "default" ]
+    env_file:
+      - .env
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    networks:
+      - backend_network
+
+  flower:
+    container_name: flower
+    image: mher/flower:2.0.1
+    restart: on-failure
+    profiles: [ "flower" ]
+    environment:
+      - CELERY_BROKER_URL=redis://default:default@${REDIS_HOST}:${REDIS_PORT}/0
+    env_file:
+      - .env
+    ports:
+      - 5555:5555
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - backend_network
+
+  back:
+    <<: *backend-image
+    container_name: backend
+    command: uvicorn website.asgi:app --host 0.0.0.0 --port ${BACKEND_PORT} --reload
+    profiles: [ "default" ]
+    volumes:
+      - .:/usr/src/app/
+      - back_static:/usr/src/app/allstaticfiles
+      - back_media:/usr/src/app/media
+      - /usr/src/app/venv
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backend_network
+
+  celery:
+    <<: *backend-image
+    container_name: celery
+    command: celery -A website worker -l error -Q basic_queue --hostname=celery
+    volumes:
+      - .:/usr/src/app/
+      - back_static:/usr/src/app/allstaticfiles
+      - back_media:/usr/src/app/media
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - backend_network
+
+  celery-beat:
+    <<: *backend-image
+    container_name: celery-beat
+    command: celery -A website beat -l error
+    volumes:
+      - .:/usr/src/app/
+      - back_static:/usr/src/app/allstaticfiles
+      - back_media:/usr/src/app/media
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - backend_network
+
+networks:
+  backend_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  back_static:
+  back_media:

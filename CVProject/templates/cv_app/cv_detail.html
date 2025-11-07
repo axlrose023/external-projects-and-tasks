@@ -1,0 +1,70 @@
+{% extends "cv_app/base.html" %}
+{% block title %}{{ cv.firstname }} {{ cv.lastname }} — CV{% endblock %}
+
+{% block content %}
+  <a href="{% url 'cv_list' %}" class="muted" style="text-decoration:none">
+    ← Back to list
+  </a>
+
+  <h1 style="margin-top:8px">{{ cv.firstname }} {{ cv.lastname }}</h1>
+
+  {% include "cv_app/partials/cv_actions.html" %}
+
+  {% include "cv_app/partials/cv_translations.html" %}
+
+  {% if cv.bio %}
+    <p class="bio" style="margin-top:8px">{{ cv.bio }}</p>
+  {% endif %}
+
+  {% if cv.skills %}
+    <h2 style="margin:24px 0 8px">Skills</h2>
+    <div class="tags">
+      {% for s in cv.skills %}
+        <span class="tag">{{ s }}</span>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if cv.projects %}
+    <h2 style="margin:28px 0 8px">Projects</h2>
+    <div class="grid" style="grid-template-columns:1fr">
+      {% for p in cv.projects %}
+        <article class="card" style="padding:14px">
+          <strong>{{ p.name|default:"Project" }}</strong>
+          {% if p.year %}<span class="muted"> — {{ p.year }}</span>{% endif %}
+          {% if p.description %}
+            <p class="bio" style="margin-top:6px">{{ p.description }}</p>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if cv.contacts %}
+    <h2 style="margin:28px 0 8px">Contacts</h2>
+    <ul style="list-style:none;padding:0;margin:0;display:grid;gap:6px">
+      {% for k, v in cv.contacts.items %}
+        <li class="card" style="display:flex;gap:12px;align-items:center">
+          <span class="muted" style="min-width:90px;text-transform:capitalize">
+            {{ k }}
+          </span>
+          <span>
+            {% if v|slice:":4" == "http" %}
+              <a href="{{ v }}">{{ v }}</a>
+            {% else %}
+              {{ v }}
+            {% endif %}
+          </span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div style="margin-top:32px">
+    <a href="{% url 'cv_list' %}"
+       style="text-decoration:none;border:1px solid var(--border);
+              border-radius:12px;padding:10px 16px;display:inline-block">
+      Back to list
+    </a>
+  </div>
+{% endblock %}

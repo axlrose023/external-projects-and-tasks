@@ -1,0 +1,70 @@
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.env
+.venv/
+*.envrc
+*.egg-info/
+.DS_Store
+
+# Django
+db.sqlite3
+*.log
+*.pot
+*.pyc
+*.sqlite3
+
+# Virtual environments
+.env/
+.venv/
+env/
+venv/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# PyCharm
+*.iml
+.idea/
+*.ipr
+*.iws
+out/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Distribution / packaging
+build/
+dist/
+eggs/
+parts/
+var/
+*.egg
+MANIFEST
+
+
+
+# Temporary files
+*.swp
+*~

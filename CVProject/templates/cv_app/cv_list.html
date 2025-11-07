@@ -1,0 +1,33 @@
+{% extends "cv_app/base.html" %}
+{% block title %}CVs{% endblock %}
+
+{% block content %}
+    <h1>CVs <span class="muted">({{ total }})</span></h1>
+
+    {% if items %}
+        <section class="grid" aria-label="CV list">
+            {% for cv in items %}
+                <article class="card">
+                    <div class="name">
+                        <a href="{% url 'cv_detail' cv.pk %}" class="name">
+                            {{ cv.lastname }} {{ cv.firstname }}
+                        </a></div>
+
+                    {% if cv.bio %}
+                        <p class="bio">{{ cv.bio|truncatechars:180 }}</p>
+                    {% endif %}
+
+                    {% if cv.skills %}
+                        <div class="tags">
+                            {% for s in cv.skills|slice:":6" %}
+                                <span class="tag">{{ s }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </article>
+            {% endfor %}
+        </section>
+    {% else %}
+        <p class="muted">No records yet.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "cv_app/base.html" %}
+{% block title %}Django settings{% endblock %}
+
+{% block content %}
+<h1>Django settings</h1>
+
+<p class="muted" style="margin-bottom:12px">
+  DEBUG: <strong>{{ settings_badges.DEBUG }}</strong> ·
+  TIME_ZONE: <strong>{{ settings_badges.TIME_ZONE }}</strong> ·
+  LANGUAGE_CODE: <strong>{{ settings_badges.LANGUAGE_CODE }}</strong> ·
+  APPS: <strong>{{ settings_badges.APPS }}</strong> ·
+  MIDDLEWARE: <strong>{{ settings_badges.MIDDLEWARE }}</strong>
+</p>
+
+{% for group, rows in settings_groups %}
+  <section class="card" style="margin-top:16px; overflow:auto;">
+    <h2 style="margin:0 0 8px 0; font-size:18px;">{{ group }}</h2>
+    {% if rows %}
+      <table style="width:100%; border-collapse:collapse; font-size:14px;">
+        <thead>
+          <tr>
+            <th style="text-align:left; padding:8px; border-bottom:1px solid #d0d0d0;">Name</th>
+            <th style="text-align:left; padding:8px; border-bottom:1px solid #d0d0d0;">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for key, value in rows %}
+            <tr>
+              <td style="vertical-align:top; padding:8px; white-space:nowrap;"><code>{{ key }}</code></td>
+              <td style="vertical-align:top; padding:8px;">
+                <pre style="margin:0; white-space:pre-wrap;">{{ value|pprint }}</pre>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="muted" style="margin:0;">No entries.</p>
+    {% endif %}
+  </section>
+{% endfor %}
+{% endblock %}

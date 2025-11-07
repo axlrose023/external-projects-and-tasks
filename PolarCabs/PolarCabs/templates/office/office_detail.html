@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Office {{ office.cabinet }}</title>
+</head>
+<body>
+    <h1>Office {{ office.cabinet }}</h1>
+    <p>{{ office.description }}</p>
+    <h2>People in this office:</h2>
+    <ul>
+        {% for person in office.persons.all %}
+            <li>{{ person.name }} - {{ person.position }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,48 @@
+name: CI Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup .env.local.sample file
+        run: cp .env.local.sample .env
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Validate docker-compose file
+        run: docker compose -f docker-compose.yml config
+
+      - name: Build Docker images
+        run: docker compose -f docker-compose.yml build
+
+      - name: Start containers
+        run: docker compose -f docker-compose.yml up -d
+
+      - name: Wait for services to initialize
+        run: sleep 15
+
+      - name: Check running containers
+        run: docker compose -f docker-compose.yml ps
+
+      - name: Run Pytest tests in Docker container
+        run: |
+          docker run --rm \
+            --network host \
+            -v ${{ github.workspace }}:/app \
+            -w /app \
+            python:3.10 \
+            bash -c "pip install pytest requests psycopg2 redis && pytest tests/test_basics.py"
+
+      - name: Stop containers
+        run: docker compose -f docker-compose.yml down

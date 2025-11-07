@@ -1,0 +1,17 @@
+fastapi==0.112.0
+uvicorn==0.30.5
+pydantic==2.8.2
+sqlalchemy[asyncio]==2.0.32
+asyncpg==0.30.0
+orjson==3.10.7
+structlog==24.4.0
+alembic==1.16.4
+psycopg2-binary==2.9.10
+numpy==2.3.2
+httpx==0.28.1
+pandas==2.3.2
+pydantic_settings==2.10.1
+pytest==8.4.1
+aiosqlite==0.21.0
+trio==0.30.0
+pytest-cov==6.2.1

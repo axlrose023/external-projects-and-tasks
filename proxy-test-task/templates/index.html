@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        {% if user.is_authenticated %}
+            <div class="mb-4">
+                <h2>Welcome, {{ user.first_name }} {{ user.last_name }}!</h2>
+            </div>
+            <div class="mb-3">
+                <h3>Here are your created sites:</h3>
+            </div>
+            {% if site_statistics %}
+                <ul class="list-group">
+                    {% for stat in site_statistics %}
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-1">{{ stat.site.name }}</h5>
+                                    <p class="mb-1">{{ stat.site.url }}</p>
+                                    {% if stat.statistics %}
+                                        <p>Page Transitions: {{ stat.statistics.page_transitions }} |
+                                            Data Sent: {{ stat.statistics.data_sent }} |
+                                            Data Received: {{ stat.statistics.data_received }}</p>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4 text-md-right">
+                                    <strong>{{ stat.site.user.username }}</strong>
+                                    <a href="{% url 'proxy_view' user_site_name=stat.site.name path=stat.site.url %}"
+                                       class="btn btn-primary btn-sm ml-2">Visit Site</a>
+                                    <a href="{% url 'delete_user_site' site_id=stat.site.id %}"
+                                       class="btn btn-danger btn-sm ml-2">Delete Site</a>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="mt-3">You haven't created any sites yet.</p>
+                <a class="btn btn-primary" href={% url 'create_user_site' %}>Create Site</a>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

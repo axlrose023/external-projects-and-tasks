@@ -1,0 +1,19 @@
+[
+  {
+    "model": "cv_app.cv",
+    "pk": 1,
+    "fields": {
+      "firstname": "Volodymyr",
+      "lastname": "Sloboda",
+      "bio": "Cybersecurity officer ",
+      "skills": ["Cybersecurity", "Python"],
+      "projects": [
+        {"name": "CoreHelper Task Manager", "year": 2025}
+      ],
+      "contacts": {
+        "email": "sloboda282@gmail.com",
+        "phone": "+380630231431"
+      }
+    }
+  }
+]
