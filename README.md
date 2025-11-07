@@ -1,6 +1,6 @@
-# Personal Projects Collection
+# External Projects and Tasks Collection
 
-This repository contains a collection of personal projects, test tasks, utilities, and experimental code.
+This repository contains a collection of external projects and tasks, including client work, test assignments, utilities, and various small projects.
 
 ## Projects
 
@@ -67,7 +67,7 @@ New project/experiment.
 ## Structure
 
 ```
-personal-projects/
+external-projects-and-tasks/
 ├── FetchWeather/
 ├── DatasetHandler/
 ├── CVProject/
@@ -93,7 +93,7 @@ personal-projects/
 
 ## Migration Notes
 
-This repository was created by consolidating multiple personal projects and test tasks:
+This repository was created by consolidating multiple external projects and tasks:
 - FetchWeather
 - DatasetHandler
 - CVProject
